@@ -1,6 +1,6 @@
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, TextInput } from "react-native";
 
 import { View } from "react-native";
 
@@ -14,7 +14,7 @@ export default function MemoEditScreen() {
   useFocusEffect(
     useCallback(() => {
       // [시작] 화면이 활성화(포커스) 되었을 때 실행할 코드 (예: API 데이터 불러오기)
-      console.log("화면이 열렸습니다. 데이터를 로드합니다.");
+      init();
 
       return () => {
         // [정리] 다른 화면으로 이동하거나 창이 닫힐 때 실행할 코드 (선택 사항)
@@ -22,6 +22,12 @@ export default function MemoEditScreen() {
       };
     }, [id]), // 의존성 배열에 감시할 상태값을 넣거나, 비워둡니다.
   );
+
+  async function init() {
+    /*  */
+  }
+  async function onSave() {}
+  async function onCancle() {}
 
   return (
     <ScrollView>
@@ -57,6 +63,10 @@ export default function MemoEditScreen() {
             setContent(e);
           }}
         />
+      </View>
+      <View>
+        <Button title="저장" onPress={onSave} />
+        <Button title="취소" onPress={onCancle} />
       </View>
     </ScrollView>
   );
