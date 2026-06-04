@@ -51,13 +51,13 @@ export default function MemoEditScreen() {
   async function onSave() {
     try {
       const formData = new FormData();
-
+      formData.append("id", String(id));
       formData.append("title", title);
       formData.append("nickname", nickname);
       formData.append("content", content);
 
       const response = await fetch(
-        "http://localhost:3000/api/memo/insert_memo",
+        "http://localhost:3000/api/memo/upsert_memo",
         {
           method: "POST",
           body: formData,
