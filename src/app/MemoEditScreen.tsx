@@ -97,14 +97,14 @@ export default function MemoEditScreen() {
       }
 
       const result = await response.json();
-      navigation.navigate("index.tsx");
+      navigation.navigate("/");
     } catch (error: any) {
       console.log(`!error: `, error?.message);
       alert(`!에러: ${error?.message}`);
     }
   }
   async function onCancle() {
-    navigation.navigate("index.tsx");
+    navigation.navigate("/");
   }
 
   return (
