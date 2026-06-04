@@ -80,7 +80,32 @@ export default function MemoEditScreen() {
       alert(`!에러: ${error?.message}`);
     }
   }
-  async function onCancle() {}
+  async function onDelete() {
+    try {
+      const formData = new FormData();
+      formData.append("id", String(id));
+
+      const response = await fetch(
+        "http://localhost:3000/api/memo/delete_memo",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      if (!response.ok) {
+        throw new Error("삭제 실패");
+      }
+
+      const result = await response.json();
+      navigation.navigate("index.tsx");
+    } catch (error: any) {
+      console.log(`!error: `, error?.message);
+      alert(`!에러: ${error?.message}`);
+    }
+  }
+  async function onCancle() {
+    navigation.navigate("index.tsx");
+  }
 
   return (
     <ScrollView>
@@ -120,6 +145,7 @@ export default function MemoEditScreen() {
       <View>
         <Button title="저장" onPress={onSave} />
         <Button title="취소" onPress={onCancle} />
+        <Button title="삭제" onPress={onDelete} />
       </View>
     </ScrollView>
   );
