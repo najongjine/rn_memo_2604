@@ -26,7 +26,39 @@ export default function MemoEditScreen() {
   async function init() {
     /*  */
   }
-  async function onSave() {}
+  async function onSave() {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/memo/insert_memo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: title,
+            nickname: nickname,
+            content: content,
+          }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error("서버 저장 실패");
+      }
+
+      const result = await response.json();
+
+      console.log("저장 성공:", result);
+
+      // 저장 후 입력칸 비우기
+      setTitle("");
+      setNickname("");
+      setContent("");
+    } catch (error: any) {
+      console.log(`!error: `, error?.message);
+      alert(`!에러: ${error?.message}`);
+    }
+  }
   async function onCancle() {}
 
   return (
