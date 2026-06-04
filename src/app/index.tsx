@@ -1,5 +1,5 @@
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Button,
@@ -38,10 +38,20 @@ export default function HomeScreen() {
       setLoading(false);
     }
   };
+  async function init() {
+    await fetchMemoList();
+  }
+  useFocusEffect(
+    useCallback(() => {
+      // [시작] 화면이 활성화(포커스) 되었을 때 실행할 코드 (예: API 데이터 불러오기)
+      init();
 
-  useEffect(() => {
-    fetchMemoList();
-  }, []);
+      return () => {
+        // [정리] 다른 화면으로 이동하거나 창이 닫힐 때 실행할 코드 (선택 사항)
+        console.log("화면을 벗어났습니다. 상태를 정리합니다.");
+      };
+    }, []), // 의존성 배열에 감시할 상태값을 넣거나, 비워둡니다.
+  );
   return (
     <View style={styles.container}>
       <Text style={styles.title}>메모 목록</Text>
