@@ -24,7 +24,29 @@ export default function MemoEditScreen() {
   );
 
   async function init() {
-    /*  */
+    try {
+      const params = new URLSearchParams({
+        id: String(id),
+      });
+      const response = await fetch(
+        `http://localhost:3000/api/memo/select_by_id?${params.toString()}`,
+        {
+          method: "GET",
+        },
+      );
+      if (!response.ok) {
+        throw new Error("서버 저장 실패");
+      }
+
+      let result: any = await response.json();
+      result = result?.data[0] || {};
+      setTitle(result?.title || "");
+      setContent(result?.content || "");
+      setNickname(result?.nickname || "");
+    } catch (error: any) {
+      console.log(`!error: `, error?.message);
+      alert(`!에러: ${error?.message}`);
+    }
   }
   async function onSave() {
     try {
